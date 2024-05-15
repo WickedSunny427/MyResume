@@ -37,6 +37,14 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet" />
+
+    <style>
+      /* Add custom styles for disabled button */
+      #sendMessageBtn:disabled {
+        background-color: #6c757d; /* Gray background color */
+        cursor: not-allowed; /* Change cursor to indicate not clickable */
+      }
+    </style>
   </head>
 
   <body>
@@ -100,7 +108,7 @@
       <div class="hero-container" data-aos="fade-in">
         <h1>Sunny Kumar</h1>
         <p>
-          I'm
+          I'm a
           <span
             class="typed"
             data-typed-items="Full Stack Developer , Trainer , Mentor , Freelancer"
@@ -582,7 +590,13 @@
             </div>
 
             <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-              <form action="#" method="get" role="form" class="php-email-form">
+              <form
+                id="contactForm"
+                action="#"
+                method="get"
+                role="form"
+                class="php-email-form"
+              >
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label for="name">Your Name</label>
@@ -620,25 +634,100 @@
                   <textarea
                     class="form-control"
                     name="message"
+                    id="message"
                     rows="10"
                     required
                   ></textarea>
                 </div>
-                <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Your message has been sent. Thank you!
-                  </div>
-                </div>
                 <div class="text-center">
-                  <button type="submit">Send Message</button>
+                  <button
+                    type="submit"
+                    id="sendMessageBtn"
+                    data-toggle="modal"
+                    data-target="#successModal"
+                    disabled
+                  >
+                    Send Message
+                  </button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Success Modal -->
+      <div
+        class="modal fade"
+        id="successModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="successModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="successModalLabel">Message Sent</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Thank you for reaching out to Sunny. He will get back to you as
+                soon as possible. Please note that responses may be delayed, but
+                rest assured, he will respond.
+              </p>
+              <p>You can also reach me at +91 9663400441.</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bootstrap JS (Optional, if you need JavaScript features) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+      <script>
+        $(document).ready(function () {
+          // Disable the "Send Message" button initially
+          $("#sendMessageBtn").prop("disabled", true);
+
+          // Enable or disable the "Send Message" button based on form validation
+          $("#contactForm input, #contactForm textarea").on(
+            "keyup",
+            function () {
+              var empty = false;
+              $("#contactForm input, #contactForm textarea").each(function () {
+                if ($(this).val().trim() === "") {
+                  empty = true;
+                }
+              });
+              if (empty) {
+                $("#sendMessageBtn").prop("disabled", true);
+              } else {
+                $("#sendMessageBtn").prop("disabled", false);
+              }
+            }
+          );
+        });
+      </script>
 
       <!-- End Contact Section -->
     </main>
